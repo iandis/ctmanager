@@ -1,3 +1,8 @@
+## 0.0.1+1
+
+* updated README
+* updated pubspec
+* formatted files according to dartfmt
 ## 0.0.1
 
 * added CancellationToken class
