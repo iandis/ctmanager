@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:ctmanager/ctmanager.dart';
 
 void main() {
@@ -14,34 +12,57 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  bool _isBusy = false;
+  bool _isToBeCancelledOperation = false;
+  String _operationState = 'waiting';
 
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
+  void _normalOperation() {
+    if (_isBusy) return;
+    setState(() {
+      _operationState = 'normal operation executed';
+      _isBusy = true;
+    });
+    CTManager.I.run(
+      token: 'normal',
+      operation: Future.delayed(
+        const Duration(seconds: 3),
+        () => setState(() {
+          _operationState = 'normal operation finished';
+          _isBusy = false;
+        }),
+      ),
+    );
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await Ctmanager.platformVersion ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
+  void _toBeCancelledOperation() {
+    if (_isBusy) return;
     setState(() {
-      _platformVersion = platformVersion;
+      _operationState = 'toBeCancelled operation executed';
+      _isBusy = true;
+      _isToBeCancelledOperation = true;
     });
+    CTManager.I.run(
+      token: 'toBeCancelled',
+      operation: Future.delayed(
+        const Duration(seconds: 5),
+        () => setState(() {
+          _operationState = 'toBeCancelled operation finished';
+          _isBusy = false;
+          _isToBeCancelledOperation = false;
+        }),
+      ),
+      onCancel: () {
+        setState(() {
+          _operationState = 'toBeCancelled operation cancelled';
+          _isBusy = false;
+          _isToBeCancelledOperation = false;
+        });
+      },
+    );
+  }
+
+  void _cancelToBeCancelledOperation() {
+    CTManager.I.cancel('toBeCancelled');
   }
 
   @override
@@ -49,10 +70,27 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('CTManager example app'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(_operationState),
+              TextButton(
+                onPressed: _isBusy ? null : _normalOperation,
+                child: const Text('Run Normal Operation'),
+              ),
+              TextButton(
+                onPressed: _isBusy ? null : _toBeCancelledOperation,
+                child: const Text('Run To-Be-Cancelled Operation'),
+              ),
+              TextButton(
+                onPressed: _isBusy && _isToBeCancelledOperation ? _cancelToBeCancelledOperation : null,
+                child: const Text('Cancel To-Be-Cancelled Operation'),
+              ),
+            ],
+          ),
         ),
       ),
     );
