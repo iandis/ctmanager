@@ -2,8 +2,7 @@ import 'dart:async' show FutureOr;
 import 'dart:developer' as dev show log;
 
 import 'package:async/async.dart' show CancelableOperation;
-import 'package:flutter/foundation.dart' as foundation
-    show kDebugMode, visibleForTesting;
+import 'package:meta/meta.dart' show visibleForTesting;
 
 import 'cancellation_token/cancellation_token.dart';
 
@@ -78,10 +77,10 @@ abstract class CTManager {
   /// * `null` if [token] cannot be found
   CancellationToken<T, R?>? of<T extends Object, R extends Object?>(T token);
 
-  @foundation.visibleForTesting
+  @visibleForTesting
   bool hasTokenOf<T extends Object>(T token);
 
-  @foundation.visibleForTesting
+  @visibleForTesting
   bool noTokenOf<T extends Object>(T token);
 
   /// cancels the operation held by [CancellationToken] of [token]
@@ -155,32 +154,28 @@ class _CTManagerImpl implements CTManager {
     if (findToken != null) {
       return findToken as CancellationToken<T, R?>;
     }
-    if (foundation.kDebugMode) {
-      dev.log(
-        'Cannot find a [CancellationToken] registered with `$token`. '
-        'This might be because it had completed, or it was cancelled, or it was never created.',
-      );
-    }
+    dev.log(
+      'Cannot find a [CancellationToken] registered with `$token`. '
+      'This might be because it had completed, or it was cancelled, or it was never created.',
+    );
   }
 
-  @foundation.visibleForTesting
+  @visibleForTesting
   @override
   bool hasTokenOf<T extends Object>(T token) => _tokens.containsKey(token);
 
-  @foundation.visibleForTesting
+  @visibleForTesting
   @override
   bool noTokenOf<T extends Object>(T token) => !_tokens.containsKey(token);
 
   @override
   void cancel<T extends Object>(T token) {
     final findToken = _tokens[token];
-    if (foundation.kDebugMode) {
-      if (findToken == null) {
-        dev.log(
-          'Cannot find a [CancellationToken] registered with `$token`. '
-          'This might be because it had completed, or it was cancelled, or it was never created.',
-        );
-      }
+    if (findToken == null) {
+      dev.log(
+        'Cannot find a [CancellationToken] registered with `$token`. '
+        'This might be because it had completed, or it was cancelled, or it was never created.',
+      );
     }
     return findToken?.cancel();
   }
