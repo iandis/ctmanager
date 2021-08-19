@@ -1,4 +1,3 @@
-
 abstract class BaseCancellationToken<T extends Object, R extends Object?> {
   /// the token of [T]
   T get token;

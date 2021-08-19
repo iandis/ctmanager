@@ -2,7 +2,8 @@ import 'dart:async' show FutureOr;
 import 'dart:developer' as dev show log;
 
 import 'package:async/async.dart' show CancelableOperation;
-import 'package:flutter/foundation.dart' as foundation show kDebugMode, visibleForTesting;
+import 'package:flutter/foundation.dart' as foundation
+    show kDebugMode, visibleForTesting;
 
 import 'cancellation_token/cancellation_token.dart';
 
@@ -58,8 +59,8 @@ abstract class CTManager {
 
   /// a shortcut to [create] which creates a unique [CancellationToken] and
   /// immediately returns the [CancellationToken.result]
-  /// 
-  /// this is suitable if you already know that [operation] will not return `null` when it completes 
+  ///
+  /// this is suitable if you already know that [operation] will not return `null` when it completes
   ///
   /// [token] will be used later to get the [CancellationToken]
   ///

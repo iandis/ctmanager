@@ -1,8 +1,7 @@
-
 import 'base_cancellation_token.dart';
 
-class CancellationToken<T extends Object, R extends Object?> implements BaseCancellationToken<T,R> {
-
+class CancellationToken<T extends Object, R extends Object?>
+    implements BaseCancellationToken<T, R> {
   const CancellationToken({
     required this.token,
     required this.cancel,
@@ -22,21 +21,22 @@ class CancellationToken<T extends Object, R extends Object?> implements BaseCanc
   final bool Function() _isCompletedFunc;
 
   /// returns true when the operation completes.
-  /// 
+  ///
   /// this is needed if a completed operation that returns [result] can also return `null`
   bool get isCompleted => _isCompletedFunc();
 
   @override
-  String toString() => 'CancellationToken(token: $token, cancel: $cancel, result: $result)';
+  String toString() =>
+      'CancellationToken(token: $token, cancel: $cancel, result: $result)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
-    return other is CancellationToken<T,R> &&
-      other.token == token &&
-      other.cancel == cancel &&
-      other.result == result;
+
+    return other is CancellationToken<T, R> &&
+        other.token == token &&
+        other.cancel == cancel &&
+        other.result == result;
   }
 
   @override

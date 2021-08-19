@@ -9,7 +9,8 @@ void main() {
         'when completes normaly,\n'
         'then returns [null] with [isCompleted] is `true`\n'
         'and its cancellation token has been removed.\n', () {
-      final Future<String?> operation = Future.value(1 == 2 ? 'something' : null);
+      final Future<String?> operation =
+          Future.value(1 == 2 ? 'something' : null);
       final ctResult = ctManager.create(
         token: 'S',
         operation: operation,

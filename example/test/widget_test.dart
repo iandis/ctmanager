@@ -16,10 +16,10 @@ void main() {
     void expectNormalOpButtonToBe({required bool enabled}) {
       return expect(
         find.byWidgetPredicate((widget) {
-          return widget is TextButton && 
-                widget.child is Text &&
-                (widget.child! as Text).data == 'Run Normal Operation' && 
-                widget.enabled == enabled;
+          return widget is TextButton &&
+              widget.child is Text &&
+              (widget.child! as Text).data == 'Run Normal Operation' &&
+              widget.enabled == enabled;
         }),
         findsOneWidget,
       );
@@ -28,10 +28,10 @@ void main() {
     void expectToBeCancelledOpButtonToBe({required bool enabled}) {
       return expect(
         find.byWidgetPredicate((widget) {
-          return widget is TextButton && 
-                widget.child is Text &&
-                (widget.child! as Text).data == 'Run To-Be-Cancelled Operation' && 
-                widget.enabled == enabled;
+          return widget is TextButton &&
+              widget.child is Text &&
+              (widget.child! as Text).data == 'Run To-Be-Cancelled Operation' &&
+              widget.enabled == enabled;
         }),
         findsOneWidget,
       );
@@ -40,10 +40,11 @@ void main() {
     void expectCancelOpButtonToBe({required bool enabled}) {
       return expect(
         find.byWidgetPredicate((widget) {
-          return widget is TextButton && 
-                widget.child is Text &&
-                (widget.child! as Text).data == 'Cancel To-Be-Cancelled Operation' && 
-                widget.enabled == enabled;
+          return widget is TextButton &&
+              widget.child is Text &&
+              (widget.child! as Text).data ==
+                  'Cancel To-Be-Cancelled Operation' &&
+              widget.enabled == enabled;
         }),
         findsOneWidget,
       );
@@ -80,9 +81,9 @@ void main() {
     );
     await tester.tap(
       find.byWidgetPredicate((widget) {
-        return widget is TextButton && 
-                widget.child is Text &&
-                (widget.child! as Text).data == 'Run Normal Operation';
+        return widget is TextButton &&
+            widget.child is Text &&
+            (widget.child! as Text).data == 'Run Normal Operation';
       }),
     );
     await tester.pump();
@@ -98,7 +99,7 @@ void main() {
     expectCancelOpButtonToBe(enabled: false);
     // ignore: avoid_print
     print('[passed]\n');
-    
+
     // ignore: avoid_print
     print(
       'Given tobecancelled operation button is ENABLED,\n'
@@ -116,12 +117,11 @@ void main() {
     // we need [runAsync] here since the app calls a real asynchronous method that uses
     // Future.delayed when tapping the `Run To-Be-Cancelled Operation` button.
     await tester.runAsync(() async {
-
       await tester.tap(
         find.byWidgetPredicate((widget) {
-          return widget is TextButton && 
-                  widget.child is Text &&
-                  (widget.child! as Text).data == 'Run To-Be-Cancelled Operation';
+          return widget is TextButton &&
+              widget.child is Text &&
+              (widget.child! as Text).data == 'Run To-Be-Cancelled Operation';
         }),
       );
 
@@ -135,9 +135,10 @@ void main() {
       await tester.pump(const Duration(seconds: 3));
       await tester.tap(
         find.byWidgetPredicate((widget) {
-          return widget is TextButton && 
-                  widget.child is Text &&
-                  (widget.child! as Text).data == 'Cancel To-Be-Cancelled Operation';
+          return widget is TextButton &&
+              widget.child is Text &&
+              (widget.child! as Text).data ==
+                  'Cancel To-Be-Cancelled Operation';
         }),
       );
       await tester.pump();
@@ -147,7 +148,6 @@ void main() {
       expectCancelOpButtonToBe(enabled: false);
       // ignore: avoid_print
       print('[passed]\n');
-
     });
 
     // ignore: avoid_print
@@ -167,9 +167,9 @@ void main() {
 
     await tester.tap(
       find.byWidgetPredicate((widget) {
-        return widget is TextButton && 
-                widget.child is Text &&
-                (widget.child! as Text).data == 'Run To-Be-Cancelled Operation';
+        return widget is TextButton &&
+            widget.child is Text &&
+            (widget.child! as Text).data == 'Run To-Be-Cancelled Operation';
       }),
     );
 
@@ -187,6 +187,5 @@ void main() {
     expectCancelOpButtonToBe(enabled: false);
     // ignore: avoid_print
     print('[passed]\n');
-
   });
 }

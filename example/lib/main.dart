@@ -86,7 +86,9 @@ class _MyAppState extends State<MyApp> {
                 child: const Text('Run To-Be-Cancelled Operation'),
               ),
               TextButton(
-                onPressed: _isBusy && _isToBeCancelledOperation ? _cancelToBeCancelledOperation : null,
+                onPressed: _isBusy && _isToBeCancelledOperation
+                    ? _cancelToBeCancelledOperation
+                    : null,
                 child: const Text('Cancel To-Be-Cancelled Operation'),
               ),
             ],
