@@ -1,5 +1,7 @@
 name: ctmanager
-description: A helper capable of managing multiple cancellation tokens with ease. Useful for operations like http requests, image processing, etc, that can be cancelled by user.
+description: A helper capable of managing multiple cancellation tokens with
+  ease. Useful for operations like http requests, image processing, etc, that
+  can be cancelled by user.
 version: 0.0.1+1
 repository: https://github.com/iandis/ctmanager
 issue_tracker: https://github.com/iandis/ctmanager/issues
@@ -9,33 +11,8 @@ environment:
 
 dependencies:
   async: ^2.6.1
-  
+  meta: ^1.3.0
+
 dev_dependencies:
   flutter_test:
-    sdk: flutter  
-  
-  
-  
-  
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+    sdk: flutter
