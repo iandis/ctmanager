@@ -34,7 +34,7 @@ note: the `token` field can be anything except `null`.
 Here both `result` have a new instance of `CancellationToken<String, String?>` since the `token` is a `String` and the return value of `operation` will be a `String`. 
 
 You might be wondering why it's CancellationToken<String, **String?**> and not CancellationToken<String, **String**>. Let's take a look at the following.
-##### example 1
+### example 1
 ```dart
 ...
 // the operation will be cancelled after 3 seconds.
@@ -55,7 +55,7 @@ if(result == null) {
 }
 ```
 However if the `operation` can also return `null`, then you have to check whether it's completed or not.
-##### example 2
+### example 2
 ```dart
 final nullableValueCancelToken = CTManager.I.create(
     token: 'ct1',
