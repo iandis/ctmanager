@@ -102,10 +102,10 @@ class _CTManagerImpl implements CTManager {
     FutureOr<void> Function()? onCancel,
   }) {
     final findToken = _tokens[token];
-    assert(
-      findToken == null,
-      'Cannot create a new [CancellationToken]: `$token` already exists',
-    );
+    if (findToken != null) {
+      throw AssertionError(
+          'Cannot create a new [CancellationToken]: `$token` already exists');
+    }
     final removeTokenFunc = _removeToken(token);
     final registerOperation = operation.whenComplete(removeTokenFunc);
     final FutureOr<void> Function()? onCancelFunc;
@@ -125,7 +125,7 @@ class _CTManagerImpl implements CTManager {
       token: token,
       cancel: () => createCancelableOperation.cancel(),
       result: createCancelableOperation.valueOrCancellation(),
-      isCompletedFunc: () => createCancelableOperation.isCompleted,
+      isCompletedFunc: () => !createCancelableOperation.isCanceled,
     );
     _tokens[token] = createToken;
     return createToken;
