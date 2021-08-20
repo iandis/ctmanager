@@ -1,7 +1,9 @@
 [![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
 
-A helper capable of managing multiple cancellation tokens.
+A helper capable of managing multiple cancellation tokens with ease. Useful for operations like http requests, image processing, etc, that can be cancelled by user.
 
+## Note 
+This package **does not** actually cancel executed operations, it just prevents hanging `await` processes when cancelled. In case of http requests or image processing, you might need to add extra mechanisms in the event of cancellation. 
 ## Usage
 `CTManager` can be used either as a singleton or as a new instance. Let's take a look at this example.
 ### with singleton
@@ -69,7 +71,7 @@ final nullableValueCancelToken = CTManager.I.create(
 // the operation will be cancelled after 3 seconds.
 Future.delayed(
     const Duration(seconds: 3), 
-    newCancelToken.cancel,
+    nullableValueCancelToken.cancel,
 );
 
 final result = await nullableValueCancelToken.result;
@@ -105,12 +107,15 @@ final result = await CTManager.I.run(
     token: 'ct1',
     operation: Future.delayed(
         const Duration(seconds: 5), 
-        () => 1 < 2 ? null : 'done',
+        () => print('done'),
     ),
 );
 // and to cancel it, just call
 //
 // CTManager.I.cancel('ct1');
 //
-// just like the above example.
+// somewhere before the operation completes.
+//
+// here you might notice that the `print('done')`
+// still gets executed even after getting cancelled, don't worry that's normal.
 ```
