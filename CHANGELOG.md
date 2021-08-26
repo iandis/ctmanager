@@ -1,3 +1,6 @@
+## 0.0.1+3
+* exposed both [hasTokenOf] and [noTokenOf]
+    * this is intentional so that it'll be easier to find existing tokens
 ## 0.0.1+2
 
 * fixed CTManager's `create` method

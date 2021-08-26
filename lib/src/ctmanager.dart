@@ -2,7 +2,6 @@ import 'dart:async' show FutureOr;
 import 'dart:developer' as dev show log;
 
 import 'package:async/async.dart' show CancelableOperation;
-import 'package:meta/meta.dart' show visibleForTesting;
 
 import 'cancellation_token/cancellation_token.dart';
 
@@ -77,10 +76,12 @@ abstract class CTManager {
   /// * `null` if [token] cannot be found
   CancellationToken<T, R?>? of<T extends Object, R extends Object?>(T token);
 
-  @visibleForTesting
+  /// check if an operation with [token]
+  /// is still running/existing
   bool hasTokenOf<T extends Object>(T token);
 
-  @visibleForTesting
+  /// check if an operation with [token]
+  /// has completed/been removed
   bool noTokenOf<T extends Object>(T token);
 
   /// cancels the operation held by [CancellationToken] of [token]
@@ -160,11 +161,9 @@ class _CTManagerImpl implements CTManager {
     );
   }
 
-  @visibleForTesting
   @override
   bool hasTokenOf<T extends Object>(T token) => _tokens.containsKey(token);
 
-  @visibleForTesting
   @override
   bool noTokenOf<T extends Object>(T token) => !_tokens.containsKey(token);
 

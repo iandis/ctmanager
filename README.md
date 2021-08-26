@@ -97,7 +97,13 @@ final findToken = CTManager.I.of<String, String?>('ct1');
 // if it is then the token you're finding can be
 // either had ben cancelled, had completed, or never created.
 ```
-and if you just want to cancel
+but if you just want to check if a `CancellationToken` still exists or not
+```dart
+final bool isStillRuning = CTManager.I.hasTokenOf('ct1');
+// or
+// final bool isNotRunning = CTManager.I.noTokenOf('ct1'); 
+```
+and to cancel it
 ```dart
 CTManager.I.cancel('ct1');
 ```
