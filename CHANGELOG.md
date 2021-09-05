@@ -1,3 +1,7 @@
+## 0.0.2
+* Fix a bug on `cancelAll` implementation
+    * it should not use `forEach` to cancel existing operations
+* Added unit test on `cancelAll`
 ## 0.0.1+3
 * exposed both [hasTokenOf] and [noTokenOf]
     * this is intentional so that it'll be easier to find existing tokens
