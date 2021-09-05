@@ -181,6 +181,10 @@ class _CTManagerImpl implements CTManager {
 
   @override
   void cancelAll() {
-    _tokens.forEach((_, operation) => operation.cancel());
+    List<CancellationToken<Object, Object?>>? operations = _tokens.values.toList(growable: false);
+    for(final CancellationToken<Object, Object?> operation in operations) {
+      operation.cancel();
+    }
+    operations = null;
   }
 }
