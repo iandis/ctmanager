@@ -26,10 +26,6 @@ class CancellationToken<T extends Object, R extends Object?>
   bool get isCompleted => _isCompletedFunc();
 
   @override
-  String toString() =>
-      'CancellationToken(token: $token, cancel: $cancel, result: $result)';
-
-  @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
